@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstScanIt - Cost-Effective Pharmaceutical Authentication</title>
+    <meta name="description" content="Secure pharmaceutical supply chains with blockchain & ZK-proofs. Verify in <200ms. Compliant with FDA DSCSA, EU-FMD & CDSCO. Starts at $0.0015/unit.">
+    <meta name="keywords" content="Pharmaceutical Serialization, Blockchain Pharma, Anti-Counterfeit Solution, DSCSA Compliance, CDSCO Track and Trace, Zero-Knowledge Proofs, Cost Effective Pharma">
+    <meta property="og:title" content="FirstScanIt - Trust in Every Scan">
+    <meta property="og:description" content="Stop counterfeit medicines. Verify authenticity instantly. Starts at just $0.0015 per unit.">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://firstscanit.com">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0,113,227,0.1), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139,92,246,0.08), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Liquid Glass Header */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(0, 0, 0, 0.3); /* Ultra-transparent base */
+            backdrop-filter: saturate(180%) blur(25px); /* The Liquid Glass Effect */
+            -webkit-backdrop-filter: saturate(180%) blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            justify-content: center; /* Center the logo */
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff, #0071E3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        /* Floating CTA Button */
+        .floating-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none; /* Prevent clicks when hidden */
+        }
+
+        .floating-cta.visible {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .floating-cta:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(41, 98, 255, 0.3);
+            border-color: rgba(41, 98, 255, 0.5);
+        }
+
+        .floating-cta span {
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        @media (max-width: 768px) {
+            .floating-cta {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+        
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 100px 20px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 140px 20px 100px;
+        }
+        
+        .compliance-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0,255,136,0.1);
+            border: 1px solid #00ff88;
+            border-radius: 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #00ff88;
+            margin-bottom: 24px;
+            animation: pulse 2s infinite;
+            max-width: 100%;
+            white-space: normal;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        h1 {
+            font-size: clamp(40px, 8vw, 100px);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #fff 20%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(16px, 4vw, 20px);
+            color: rgba(255,255,255,0.8);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 64px;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0071E3, #8B5CF6);
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0,113,227,0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,113,227,0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .usp-badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .usp-badge {
+            padding: 8px 16px;
+            background: rgba(139,92,246,0.1);
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .speed-demo {
+            background: rgba(0,113,227,0.05);
+            border: 2px solid rgba(0,212,255,0.2);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        
+        .speed-counter {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        
+        .speed-label {
+            font-size: clamp(16px, 4vw, 24px);
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 24px;
+        }
+        
+        .verification-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        
+        .verification-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            width: 0%;
+            animation: verify 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes verify {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin: 60px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(0,212,255,0.3);
+            transform: translateY(-4px);
+        }
+        
+        .stat-number {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+        }
+        
+        .stat-detail {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 8px;
+        }
+        
+        .key-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 80px 0;
+            padding: 0 10px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(0,113,227,0.05));
+            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 24px;
+            padding: 40px 32px;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            border-color: rgba(139,92,246,0.4);
+            transform: translateY(-4px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .feature-desc {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        .section-title {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            font-size: clamp(16px, 4vw, 18px);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 64px;
+            padding: 0 20px;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+        
+        .step-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 32px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #0071E3, #8B5CF6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            box-shadow: 0 8px 24px rgba(0,113,227,0.4);
+        }
+        
+        .step-icon {
+            font-size: 40px;
+            margin: 24px 0 24px;
+        }
+        
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .step-desc {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 64px 0;
+        }
+        
+        .compliance-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .compliance-flag {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        
+        .compliance-name {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .compliance-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        footer {
+            background: rgba(10,10,10,0.9);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 48px 40px;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero { padding: 120px 20px 80px; }
+            section { padding: 60px 20px 40px; }
+            .cta-group { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+            .key-features { grid-template-columns: 1fr; gap: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Liquid Glass Header -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">FirstScanIt</a>
+            <!-- All other navigation links and buttons have been removed as requested -->
+        </div>
+    </nav>
+
+    <!-- Floating CTA Button (appears on scroll) -->
+    <a href="https://verify.firstscanit.com" class="floating-cta" id="floatingCta">
+        <span>Try Live Demo</span> →
+    </a>
+
+    <section class="hero">
+        <div class="compliance-badge">
+            ✅ CDSCO (India) • FDA DSCSA • EU FMD • TGA Compliant
+        </div>
+        
+        <h1>Trust in Every Scan</h1>
+        
+        <p class="hero-subtitle">
+            The production-ready authentication layer for the pharmaceutical supply chain. 
+            Powered by <strong>Hyperledger Fabric</strong> and <strong>Zero-Knowledge Proofs</strong> to protect privacy while guaranteeing authenticity.
+        </p>
+        
+        <div class="usp-badges">
+            <div class="usp-badge">
+                <span>🔒</span>
+                <span>AES-256-GCM</span>
+            </div>
+            <div class="usp-badge">
+                <span>⛓️</span>
+                <span>Hyperledger Fabric</span>
+            </div>
+            <div class="usp-badge">
+                <span>🔑</span>
+                <span>BIP32 Keys</span>
+            </div>
+            <div class="usp-badge">
+                <span>👁️</span>
+                <span>zk-SNARKs</span>
+            </div>
+        </div>
+        
+        <div class="cta-group">
+            <a href="https://verify.firstscanit.com" class="btn-primary">🚀 Launch Pilot</a>
+        </div>
+        
+        <div class="speed-demo">
+            <div class="speed-counter" id="speedCounter">247ms</div>
+            <div class="speed-label">⚡ Real-Time Verification Latency</div>
+            <div class="verification-bar">
+                <div class="verification-progress"></div>
+            </div>
+            <p style="color:rgba(255,255,255,0.6);font-size:14px">API Response time for End-User Verification</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">< $0.0015</div>
+                <div class="stat-label">Per Unit Cost</div>
+                <div class="stat-detail">Starts low, scales with volume*</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12 Wks</div>
+                <div class="stat-label">To Deployment</div>
+                <div class="stat-detail">Rapid Pilot Launch</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2,000+</div>
+                <div class="stat-label">Txns Per Second</div>
+                <div class="stat-detail">High Scalability</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">~30%</div>
+                <div class="stat-label">Revenue Potential</div>
+                <div class="stat-detail">Loss Recovery</div>
+            </div>
+        </div>
+        
+        <div class="key-features" id="technology">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Zero-Knowledge Privacy</div>
+                <div class="feature-desc">
+                    We use zk-SNARKs to prove product authenticity and distribution authorization without revealing sensitive business data like volume, pricing, or upstream partners.
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⛓️</div>
+                <div class="feature-title">Hyperledger Fabric v2.5</div>
+                <div class="feature-desc">
+                    Built on a permissioned, private blockchain infrastructure ensuring high throughput (2000+ TPS) and immutable record-keeping for audit trails.
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-title">Military-Grade Crypto</div>
+                <div class="feature-desc">
+                    All off-chain data is secured with AES-256-GCM. Key management utilizes BIP32 Hierarchical Deterministic Keys for secure manufacturer-to-distributor authorization.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2 class="section-title">Secure Implementation Flow</h2>
+        <p class="section-subtitle">A seamless integration process that works with your existing packaging lines</p>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">🏭</div>
+                <div class="step-title">Serialize & Sign</div>
+                <div class="step-desc">
+                    Manufacturer generates unique IDs using their Private Key. 
+                    Data is hashed (SHA-256) and encrypted before being anchored on the ledger.
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">📦</div>
+                <div class="step-title">Secure Distribution</div>
+                <div class="step-desc">
+                    Smart Contracts verify the chain of custody at every hand-off. 
+                    Distributors verify batches without seeing the full supply map.
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">📱</div>
+                <div class="step-title">Instant Verification</div>
+                <div class="step-desc">
+                    Pharmacists and Patients scan the Data Matrix QR code. 
+                    The app decrypts the signature and verifies it against the blockchain in < 200ms.
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon">✅</div>
+                <div class="step-title">Audit & Analytics</div>
+                <div class="step-desc">
+                    Real-time dashboards show scan locations and potential counterfeit attempts. 
+                    Automated reporting for CDSCO and FDA compliance.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="compliance">
+        <h2 class="section-title">Global Regulatory Readiness</h2>
+        <p class="section-subtitle">Meeting the strictest serialization mandates across the globe</p>
+        
+        <div class="compliance-grid">
+            <div class="compliance-item">
+                <div class="compliance-flag">🇮🇳</div>
+                <div class="compliance-name">India - CDSCO</div>
+                <div class="compliance-desc">Fully compliant with Top 300 Brand Serialization Mandate</div>
+            </div>
+
+            <div class="compliance-item">
+                <div class="compliance-flag">🇺🇸</div>
+                <div class="compliance-name">USA - FDA</div>
+                <div class="compliance-desc">Meets DSCSA Unit-Level Traceability Requirements</div>
+            </div>
+            
+            <div class="compliance-item">
+                <div class="compliance-flag">🇪🇺</div>
+                <div class="compliance-name">Europe - EU FMD</div>
+                <div class="compliance-desc">Compatible with Falsified Medicines Directive standards</div>
+            </div>
+            
+            <div class="compliance-item">
+                <div class="compliance-flag">🇦🇺</div>
+                <div class="compliance-name">Australia - TGA</div>
+                <div class="compliance-desc">Supports TGO 91/92 Data Matrix requirements</div>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align:center;padding:80px 20px;background:linear-gradient(135deg,rgba(0,113,227,0.08),rgba(139,92,246,0.08));border-radius:32px;margin-bottom: 80px;">
+        <h2 class="section-title">Secure Your Brand Revenue</h2>
+        <p class="section-subtitle">
+            Protect your patients and recover the 10-30% of revenue lost to counterfeiters.
+            Deploy a pilot in 8-12 weeks.
+        </p>
+        <div class="cta-group">
+            <a href="mailto:magic@firstscanit.com" class="btn-primary">
+                📧 Schedule Strategy Call
+            </a>
+            <a href="https://verify.firstscanit.com" class="btn-secondary">
+                📱 Try Verification Demo
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FirstScanIt. Engineered for Trust. | Built on Hyperledger Fabric</p>
+        <p style="margin-top:16px;">
+            <a href="/privacy" style="color:rgba(255,255,255,0.6);text-decoration:none">Privacy Policy</a> • 
+            <a href="/terms" style="color:rgba(255,255,255,0.6);text-decoration:none">Terms of Service</a>
+        </p>
+        <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.4);">* Pricing depends on volume and specific integration needs. Minimum commitments may apply.</p>
+    </footer>
+
+    <script>
+        // Speed Counter Animation
+        const counter = document.getElementById('speedCounter');
+        const speeds = [247, 203, 198, 189, 265, 221, 156, 178, 234, 289];
+        let index = 0;
+        
+        setInterval(() => {
+            counter.textContent = speeds[index] + 'ms';
+            index = (index + 1) % speeds.length;
+        }, 2000);
+        
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Floating CTA Logic
+        const floatingCta = document.getElementById('floatingCta');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                floatingCta.classList.add('visible');
+            } else {
+                floatingCta.classList.remove('visible');
+            }
+        });
+        
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.stat-card, .step-card, .compliance-item, .feature-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
